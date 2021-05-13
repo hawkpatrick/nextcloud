@@ -1,0 +1,20 @@
+{
+  "Messages":[
+    {
+      "From": {
+        "Email": "hawkpatrick@gmail.com",
+        "Name": "Patrick"
+      },
+      "To": [
+        {
+          "Email": "hawkpatrick@gmail.com",
+          "Name": "Patrick"
+        }
+      ],
+      "Subject": "Backup FEHLGESCHLAGEN",
+      "TextPart": "Greetings from Mailjet.",
+      "HTMLPart": "Hat nicht geklappt",
+      "CustomID": "AppGettingStartedTest"
+    }
+  ]
+}
