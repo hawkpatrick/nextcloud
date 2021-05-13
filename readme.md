@@ -30,3 +30,10 @@ NEX-2a: Mounten der Festplatte generell
 
 NEX-2b: Berechtigungen müssen richtig gesetzt werden
 
+
+# NEX-3
+
+* Wöchentliches Backup 
+* Backups älter als 8 Wochen werden automatisch gelöscht
+* E-Mail wenn Backup durchgelaufen ist
+
