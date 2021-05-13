@@ -1,5 +1,5 @@
 #!/bin/bash
 
-docker stop nextcloud
-docker rm nextcloud
-sudo rm -r data
+sudo docker stop nextcloud
+sudo docker rm nextcloud
+sudo rm -rf data

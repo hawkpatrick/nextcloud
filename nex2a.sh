@@ -19,13 +19,20 @@ sudo docker run --name nextcloud -d \
 -v "$PWD/skeleton":/tmp/myskeleton \
 nextcloud
 
-echo "Docker container nextcloud created. Now waiting 15 seconds for it to come up"
+echo "Docker container nextcloud created. Now waiting for it to come up. Therfore we will curl every 5 seconds on login page and check if status code is 200"
 
-sleep 15
+startup_status_code="0"
+while [[ "200" != $startup_status_code ]]; do
+  sleep 5
+  startup_status_code=$(curl --write-out %{http_code} --silent --output /dev/null localhost:8080/login) || echo "curl failed. Waiting for 5 seconds and try again."
+done
 
 # Setze das skeletondirectory (enthält Standard-Dateien für neue User) auf das gemountete leere Verzeichnis
 sudo docker exec --user www-data nextcloud php occ config:system:set skeletondirectory --value='/tmp/myskeleton'
 
+# Adding trusted_domains
+sudo docker exec --user www-data nextcloud php occ config:system:set trusted_domains 2 --value=192.168.1.216
+sudo docker exec --user www-data nextcloud php occ config:system:set trusted_domains 3 --value=pi
 
 # User "patrick" in Nextcloud anlegen:
 
@@ -36,14 +43,15 @@ sudo docker exec --user www-data nextcloud php occ user:add --display-name="Patr
 # also unter ./data/patrick/files. Dies ist bei nextcloud vorgegeben. 
 sudo mkdir -p ./data/patrick/files
 
-# Annahme: Die zu kopierenden Daten liegen unter /home/pho/Pictures
-sudo cp -r /home/pho/Pictures data/patrick/files/Pictures
-sudo cp -r /home/pho/Videos data/patrick/files/Videos
+# Annahme: Die zu kopierenden Daten liegen unter /home/$$USRR/Pictures
+sudo cp -r "/home/$USER/Pictures" "data/patrick/files/Pictures"
+sudo cp -r "/home/$USER/Videos" "data/patrick/files/Videos"
 
 
 # Für den Ordner "data" wird der Owner wie folgt gesetzt: 
 # User "www-data" und Gruppe "pho". 
 # Dadurch kann der User www-data Vollzugreifen (für nextcloud nötig) und die Gruppe pho ebenfalls. # Letzteres ist nötig, damit man über den Datei-Explorer zugreifen kann, wenn man möchte. 
+sudo groupadd -f pho
 sudo chown -R www-data:pho data
 
 
