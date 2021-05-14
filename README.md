@@ -34,6 +34,10 @@ NEX-2b: Berechtigungen müssen richtig gesetzt werden
 TODOs: 
 * Beim Reboot muss der Docker-Container wieder gestartet werden
 
+# NEX-2 
+
+TODO: Mounten der NTFS-Festplatte als Owner: User www-data
+
 # NEX-3
 
 * Wöchentliches Backup von Platte A auf Platte B 
