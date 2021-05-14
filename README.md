@@ -31,6 +31,10 @@ NEX-2a: Mounten der Festplatte generell
 NEX-2b: Berechtigungen müssen richtig gesetzt werden
 
 
+# NEX-2 
+
+TODO: Mounten der NTFS-Festplatte als Owner: User www-data
+
 # NEX-3
 
 * Wöchentliches Backup 
