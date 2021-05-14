@@ -30,10 +30,32 @@ NEX-2a: Mounten der Festplatte generell
 
 NEX-2b: Berechtigungen müssen richtig gesetzt werden
 
+# NEX-1
+TODOs: 
+* Beim Reboot muss der Docker-Container wieder gestartet werden
 
 # NEX-3
 
-* Wöchentliches Backup 
+* Wöchentliches Backup von Platte A auf Platte B 
 * Backups älter als 8 Wochen werden automatisch gelöscht
 * E-Mail wenn Backup durchgelaufen ist
 
+# NEX-2: Infos
+
+/etc/fstab wurde um 2 Zeilen für die beiden einzubindenden Festplatten ergänzt (siehe unten).
+
+Die umask ist eine "Maske", d.h. man muss die Berechtigungen spiegelverkehrt lesen. 
+uid=33 steht für: Owner der Dateien und Ordner ist User 33, also www-data (für nextcloud nötig). 
+gid=1000 steht für: Ownende Gruppe ist pi, damit der User pi auf den Dateien arbeiten kann. 
+
+Das erneute Mounten von MyBook funktioniert nur bei einem Reboot. 
+
+Ob man PARTUUID oder UUID nimmt ist egal. Die Trekstor-Platte war im Format ntfs, MyBook in exfat. 
+noatime war bei exfat in der Doku als Standard mit dabei, weshalb es bei MyBook gesetzt ist. 
+```
+# Trekstor
+PARTUUID=0f10151c-01 /media/pi/Trekstor ntfs-3g umask=007,uid=33,gid=1000 0 0
+
+# My Book
+UUID=040F-8978 /media/pi/MyBook exfat umask=007,uid=33,gid=1000,noatime 0 0
+```

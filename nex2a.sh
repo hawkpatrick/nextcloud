@@ -12,8 +12,8 @@ mkdir "$data_directory" || echo "$data_directory was not created. Probably alrea
 # User "www-data" und Gruppe "pho".
 # Dadurch kann der User www-data Vollzugreifen (für nextcloud nötig) und die Gruppe pho ebenfalls. 
 # Letzteres ist nötig, damit man über den Datei-Explorer zugreifen kann, wenn man möchte.
-sudo groupadd -f pho
-sudo chown -R www-data:pho "$data_directory"
+#sudo groupadd -f pho
+#sudo chown -R www-data:pho "$data_directory"
 
 # Start des Nextcloud-Containers
 #  * "$data_directory" muss nach /var/www/html/data gemountet werden. 
@@ -63,7 +63,7 @@ sudo cp -r "/home/$USER/Videos" "$data_directory/patrick/files/Videos"
 # Für den Ordner "$data_directory" wird der Owner wie folgt gesetzt: 
 # User "www-data" und Gruppe "pho". 
 # (Wiederholung von oben)
-sudo chown -R www-data:pho "$data_directory"
+#sudo chown -R www-data:pho "$data_directory"
 
 
 # Mit occ einen File-Scan durchführen
