@@ -46,6 +46,16 @@ TODO: Mounten der NTFS-Festplatte als Owner: User www-data
 
 # NEX-2: Infos
 
+# .bashrc
+
+Es wurde folgende Zeile in /home/pi/.bashrc ergänzt, damit nextcloud beim Reboot automatisch gestartet wird: 
+
+```
+docker start nextcloud
+```
+
+# /etc/fstab
+
 /etc/fstab wurde um 2 Zeilen für die beiden einzubindenden Festplatten ergänzt (siehe unten).
 
 Die umask ist eine "Maske", d.h. man muss die Berechtigungen spiegelverkehrt lesen. 
@@ -58,7 +68,9 @@ Ob man PARTUUID oder UUID nimmt ist egal. Die Trekstor-Platte war im Format ntfs
 noatime war bei exfat in der Doku als Standard mit dabei, weshalb es bei MyBook gesetzt ist. 
 ```
 # Trekstor
-PARTUUID=0f10151c-01 /media/pi/Trekstor ntfs-3g umask=007,uid=33,gid=1000 0 0
+# nofail is set as we do not want to block boot when the device is not there
+#        we only want it to be there for backups
+PARTUUID=0f10151c-01 /media/pi/Trekstor ntfs-3g umask=007,uid=33,gid=1000,nofail 0 0
 
 # My Book
 UUID=040F-8978 /media/pi/MyBook exfat umask=007,uid=33,gid=1000,noatime 0 0
