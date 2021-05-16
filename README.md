@@ -75,3 +75,11 @@ PARTUUID=0f10151c-01 /media/pi/Trekstor ntfs-3g umask=007,uid=33,gid=1000,nofail
 # My Book
 UUID=040F-8978 /media/pi/MyBook exfat umask=007,uid=33,gid=1000,noatime 0 0
 ```
+
+# crontab
+
+Um täglich ein Backup zu erstellen, wurde folgende Zeile in crontab (Aufruf mit sudo crontab -e) ergänzt:
+
+```
+17 30 * * * /home/pi/workspace/nextcloud/create_backup.sh >/home/pi/workspace/nextcloud/backup.log 2>&1
+```
