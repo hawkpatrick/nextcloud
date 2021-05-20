@@ -90,3 +90,29 @@ Um täglich ein Backup zu erstellen, wurde folgende Zeile in crontab (Aufruf mit
 ```
 17 30 * * * /home/pi/workspace/nextcloud/create_backup.sh >/home/pi/workspace/nextcloud/backup.log 2>&1
 ```
+
+# Festplatte an / aus
+
+Mit ```sudo apt install mosquitto``` wurde ein MQTT-Server installiert.
+
+Der zigbee2mqtt-Stick ist per USB angeschlossen.
+
+Es wird ein docker container gestartet um den zigbee2mqtt-Stick als Device in der MQTT zu registrieren:
+
+```
+docker run -d --name zigbee2mqtt -v /home/pi/workspace/zigbee2mqtt/data:/app/data --device=/dev/ttyACM0 -e TZ=Europe/Amsterdam -v /run/udev:/run/udev:ro --privileged=true --network=host koenkk/zigbee2mqtt
+```
+Einmalig muss die Steckdose, welcher Festplatte B steuert mit 10-sekündigem Power-Knopf Drücken registriert werden. Die Information wird in /app/data gespeichert. 
+
+Um die Steckdose anzuschalten wird folgender Befehl in die Queue gesendet: 
+```
+mosquitto_pub -h localhost -t zigbee2mqtt/0x7cb03eaa0a091af3/set -m '{"state": "ON"}'
+```
+
+Zum Deaktivieren wird folgender Befehl gesendet: 
+```
+mosquitto_pub -h localhost -t zigbee2mqtt/0x7cb03eaa0a091af3/set -m '{"state": "ON"}'
+```
+
+Dies wird vor (Steckdose ein) und nach (Steckdose aus) jedem Backup von A nach B benutzt. 
+
