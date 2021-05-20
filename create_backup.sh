@@ -4,7 +4,7 @@ set -e
 cd /home/pi/workspace/nextcloud
 source env.properties
 
-backups_root_dir=$BACKUPS_ROOT_DIRECOTRY
+backups_root_dir='/media/pi/Trekstor/nextcloud_backups'
 nextcloud_data_dir=$NEXTCLOUD_DATA_DIRECTORY
 
 if [ -d "$backups_root_dir" ]; then
@@ -14,8 +14,12 @@ else
   exit 1
 fi
 
-backup_foldername="$backups_root_dir/"$(date +'%Y-%m-%d')
+# Auf trekstor ist nur Platz für maximal 1 Backup 
+# daher wird das Backup-Verzeichnis nicht mit Zeitstempl, 
+# sondern mit latest benannt.
+#backup_foldername="$backups_root_dir/"$(date +'%Y-%m-%d')
+backup_foldername="$backups_root_dir/latest"
+
 sudo rsync -Aavx "$nextcloud_data_dir/patrick/files" "$backup_foldername/"
-sudo rsync -avh "$nextcloud_data_dir/patrick/files" "$backups_root_dir/latest/" --delete
 
 ./send_mail.sh 'success'
