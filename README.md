@@ -1,6 +1,13 @@
-# Vorhaben 
+# Projektübersicht
 
-## Vorrausseztung
+## Requirements
+
+* raspbian als Betriebssystem installiert
+* docker.io
+* git 
+
+
+## Bisheriger Zustand
 
 * Alle Bilder, inklusive aktuellste Bilder sind auf Festplatte A (3TB-Festplatte, neu)
 * Backup aller Bilder bis ca Mitte 2020 auch auf Festplatte B
