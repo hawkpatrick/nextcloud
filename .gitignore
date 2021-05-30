@@ -3,3 +3,6 @@ data/
 skeleton/
 secrets.sh
 backup.log
+python/secrets.properties
+secrets.properties
+
